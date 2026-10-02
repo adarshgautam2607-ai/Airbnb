@@ -1,3 +1,6 @@
+const dns = require("dns");
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
+
 if(process.env.NODE_ENV != "production"){
     require('dotenv').config();
 }
@@ -85,6 +88,10 @@ app.use((req, res, next) => {
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
     next();
+});
+
+app.get("/", (req, res) => {
+    res.redirect("/listings");
 });
 
 app.use("/listings", listingRouter);
